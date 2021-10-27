@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 @Api(description = "API pour les opérations CRUD sur les modèles de voitures")
 //annotation qui combine @Controller (gère les requêtes http) et @ResponseBody (lie la valeur de retour au corps de la réponse http, convertit l'objet renvoyé en JSON) 
 @Controller
-public class CarController {
+public class RentController {
 
 	// instancie automatiquement un objet de la classe indiquée
 	@Autowired
