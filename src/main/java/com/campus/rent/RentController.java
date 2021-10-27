@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -118,7 +119,7 @@ public class RentController {
 			newCar.setModele(modele);
 			newCar.setCouleur(couleur);
 			
-			restTemplate.postForObject("http://localhost:8081/modeles", newCar, String.class);
+			restTemplate.put("http://localhost:8081/modeles/" + id, newCar);
 			return "redirect:/cars";
 		}
 
@@ -126,9 +127,10 @@ public class RentController {
 		return "addCar";
 	}
 
-	@PostMapping(value = "/deleteCar")
+	@PostMapping(value = "/deleteCar/{id}")
 	public String deleteCar(@RequestParam("carId") String carId) {
-		myCars.delete(Integer.parseInt(carId));
+		restTemplate.delete("http://localhost:8081/modeles/" + carId);
+//		myCars.delete(Integer.parseInt(carId));
 		return "redirect:/cars";
 	}
 

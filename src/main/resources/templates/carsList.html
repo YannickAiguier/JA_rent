@@ -20,7 +20,7 @@
             </tr>
             <tr th:each ="car : ${cars}">
                <td>
-               <form method="POST" th:action="@{/deleteCar}">
+               <form method="POST" th:action="@{'/deleteCar/' + ${car.id}}">
                		<input type="hidden" name="carId" id="carId" th:value="${car.id}" />
     				<button type="submit">X</button>
 			   </form>
