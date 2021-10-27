@@ -2,6 +2,9 @@ package com.campus.rent;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,9 +24,8 @@ import io.swagger.annotations.ApiOperation;
 @Controller
 public class RentController {
 
-	// instancie automatiquement un objet de la classe indiquée
 	@Autowired
-	private CarDao myCars;
+	private RestTemplate restTemplate;
 
 	// annotation swagger pour personnaliser la description du end-point
 	@ApiOperation(value = "Affiche la liste des modèles de voitures")
