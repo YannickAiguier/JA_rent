@@ -76,8 +76,14 @@ public class RentController {
 
 		if (modele != null && modele.length() > 0 //
 				&& marque != null && marque.length() > 0 && couleur != null && couleur.length() > 0) {
-			Car newCar = new Car(marque, modele, couleur);
-			myCars.save(newCar);
+			Car newCar = new Car();
+			newCar.setMarque(marque);
+			newCar.setModele(modele);
+			newCar.setCouleur(couleur);
+			
+			// appel API pour création
+			restTemplate.postForObject("http://localhost:8081/modeles", newCar, String.class);
+//			myCars.save(newCar);
 
 			return "redirect:/cars";
 		}
