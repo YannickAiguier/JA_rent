@@ -5,6 +5,10 @@ import java.util.List;
 public class CarList {
 	
 	private List<Car> carList;
+	
+	public CarList() {
+		  
+	}
 
 	/**
 	 * @return the carList

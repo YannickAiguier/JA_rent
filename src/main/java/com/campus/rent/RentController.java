@@ -40,11 +40,11 @@ public class RentController {
 	@GetMapping(value = { "/cars" })
 	public String list(Model model) {
 		// appel de l'API cars pour récupérer la liste des voitures
-
-		// création de la liste de voitures
+		CarList myCars = new CarList();
+		myCars.setCarList(restTemplate.getForObject("http://localhost:8081/modeles", List.class));
 
 		// appel de la vue avec la liste en paramètre
-		model.addAttribute("cars", myCars.findAll());
+		model.addAttribute("cars", myCars.getCarList());
 		return "carsList";
 	}
 
