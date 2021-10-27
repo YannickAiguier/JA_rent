@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +39,11 @@ public class RentController {
 
 	@GetMapping(value = { "/cars" })
 	public String list(Model model) {
+		// appel de l'API cars pour récupérer la liste des voitures
+
+		// création de la liste de voitures
+
+		// appel de la vue avec la liste en paramètre
 		model.addAttribute("cars", myCars.findAll());
 		return "carsList";
 	}
@@ -46,7 +52,11 @@ public class RentController {
 	// indique que la méthode répondra à une requête GET
 	@GetMapping(value = "/cars/{id}")
 	public String show(@PathVariable int id, Model model) {
-		model.addAttribute("car", myCars.findCarById(id));
+		// appel de l'API cars pour récupérer la voiture
+		Car car = restTemplate.getForObject("http://localhost:8081/modeles/" + id, Car.class);
+
+		// appel de la vue avec la voiture en paramètre
+		model.addAttribute("car", car);
 		return "car";
 	}
 
@@ -59,7 +69,7 @@ public class RentController {
 
 	@PostMapping(value = { "/addCar" })
 	public String saveCar(Model model, @ModelAttribute("carForm") CarForm carForm) {
-		
+
 		String modele = carForm.getModele();
 		String marque = carForm.getMarque();
 		String couleur = carForm.getCouleur();
@@ -82,7 +92,7 @@ public class RentController {
 //		return myCars.save(car);
 //		// ici faire un redirect
 //	}
-	
+
 	@GetMapping(value = { "/editCar/{id}" })
 	public String showEditCarPage(@PathVariable int id, Model model) {
 		editCarForm editCarForm = new editCarForm();
@@ -97,7 +107,7 @@ public class RentController {
 
 	@PostMapping(value = { "/editCar" })
 	public String saveEditedCar(Model model, @ModelAttribute("editCarForm") editCarForm carForm) {
-		
+
 		String id = carForm.getId();
 		String modele = carForm.getModele();
 		String marque = carForm.getMarque();
@@ -127,11 +137,11 @@ public class RentController {
 //		myCars.delete(id);
 //		return "";
 //	}
-	
-	@PostMapping(value="/deleteCar")
+
+	@PostMapping(value = "/deleteCar")
 	public String deleteCar(@RequestParam("carId") String carId) {
-	    myCars.delete(Integer.parseInt(carId));
-	    return "redirect:/cars";
+		myCars.delete(Integer.parseInt(carId));
+		return "redirect:/cars";
 	}
 
 }
