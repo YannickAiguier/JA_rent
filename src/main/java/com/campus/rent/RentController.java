@@ -83,7 +83,6 @@ public class RentController {
 			
 			// appel API pour création
 			restTemplate.postForObject("http://localhost:8081/modeles", newCar, String.class);
-//			myCars.save(newCar);
 
 			return "redirect:/cars";
 		}
@@ -92,17 +91,10 @@ public class RentController {
 		return "addCar";
 	}
 
-//	@ApiOperation(value = "Ajoute un modèle de voiture")
-//	@PostMapping(value = "/cars")
-//	public Car addCar(@RequestBody Car car) {
-//		return myCars.save(car);
-//		// ici faire un redirect
-//	}
-
 	@GetMapping(value = { "/editCar/{id}" })
 	public String showEditCarPage(@PathVariable int id, Model model) {
 		editCarForm editCarForm = new editCarForm();
-		Car tmpCar = myCars.findCarById(id);
+		Car tmpCar = restTemplate.getForObject("http://localhost:8081/modeles/" + id, Car.class);
 		editCarForm.setId(String.valueOf(id));
 		editCarForm.setMarque(tmpCar.getMarque());
 		editCarForm.setModele(tmpCar.getModele());
@@ -121,28 +113,18 @@ public class RentController {
 
 		if (modele != null && modele.length() > 0 //
 				&& marque != null && marque.length() > 0 && couleur != null && couleur.length() > 0) {
-			Car newCar = new Car(marque, modele, couleur);
-			myCars.update(newCar, Integer.parseInt(id));
-
+			Car newCar = new Car();
+			newCar.setMarque(marque);
+			newCar.setModele(modele);
+			newCar.setCouleur(couleur);
+			
+			restTemplate.postForObject("http://localhost:8081/modeles", newCar, String.class);
 			return "redirect:/cars";
 		}
 
 		model.addAttribute("errorMessage", "Modèle, Marque et Couleur requis !!");
 		return "addCar";
 	}
-
-	@ApiOperation(value = "Modifie un modèle de voiture")
-	@PutMapping(value = "/cars/{id}")
-	public Car updateCar(@PathVariable int id, @RequestBody Car car) {
-		return myCars.update(car, id);
-	}
-
-//	@ApiOperation(value = "Supprime un modèle de voiture par son Id")
-//	@DeleteMapping(value = "/cars/{id}")
-//	public String deleteCar(@PathVariable int id) {
-//		myCars.delete(id);
-//		return "";
-//	}
 
 	@PostMapping(value = "/deleteCar")
 	public String deleteCar(@RequestParam("carId") String carId) {
