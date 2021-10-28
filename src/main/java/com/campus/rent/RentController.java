@@ -115,6 +115,7 @@ public class RentController {
 		if (modele != null && modele.length() > 0 //
 				&& marque != null && marque.length() > 0 && couleur != null && couleur.length() > 0) {
 			Car newCar = new Car();
+			newCar.setId(Integer.valueOf(id));
 			newCar.setMarque(marque);
 			newCar.setModele(modele);
 			newCar.setCouleur(couleur);
