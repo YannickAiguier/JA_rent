@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Location - Voitures</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Liste des voitures</h1>
+      <a href="addCar">Ajouter une voiture</a>
+      <br/><br/>
+      <div>
+         <table border="1">
+            <tr>
+            	<th></th>
+               <th>Marque</th>
+               <th>Modèle</th>
+               <th>Couleur</th>
+               <th></th>
+            </tr>
+            <tr th:each ="car : ${cars}">
+               <td>
+               <form method="POST" th:action="@{'/deleteCar/' + ${car.id}}">
+               		<input type="hidden" name="carId" id="carId" th:value="${car.id}" />
+    				<button type="submit">X</button>
+			   </form>
+			   </td> 
+               <td th:utext="${car.marque}">...</a></td>
+               <td th:utext="${car.modele}">...</td>
+               <td th:utext="${car.couleur}">...</td>
+               <td><a th:href="@{'/cars/' + ${car.id}}">Détails</a></td>
+               <td><a th:href="@{'/editCar/' + ${car.id}}">Modification</a></td>
+            </tr>
+         </table>
+      </div>
+      <a href="/">Accueil</a>
+   </body>
+</html>

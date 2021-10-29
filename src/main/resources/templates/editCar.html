@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <meta charset="UTF-8" />
+      <title>Location - Modification d'une voiture</title>
+      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+   </head>
+   <body>
+      <h1>Modifier une voiture :</h1>
+         
+      <form th:action="@{/editCar}"
+         th:object="${editCarForm}" method="POST">
+         <input type="hidden" th:field="*{id}" th:value="*{id}"/>
+         Marque :
+         <input type="text" th:field="*{marque}" />     
+         <br/>
+         Modèle :
+         <input type="text" th:field="*{modele}" />    
+         <br/>
+         Couleur :
+         <input type="text" th:field="*{couleur}" />     
+         <br/>
+         <input type="submit" value="Modifier" />
+      </form>
+      
+      <a href="/cars">Retour</a>
+      
+      <br/>
+      
+      <!-- Check if errorMessage is not null and not empty -->
+      
+      <div th:if="${errorMessage}" th:utext="${errorMessage}"
+         style="color:red;font-style:italic;">
+         ...
+      </div>
+      
+   </body>
+</html>
